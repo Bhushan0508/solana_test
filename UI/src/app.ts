@@ -1,28 +1,29 @@
-// ./src/app.ts
 import express from 'express';
 import pm2Lib from './pm2Lib';
+import socketIO from './socketIO';
+
 const app = express();
+
 app.use(express.static('public'));
+
 app.get('/', (req, res) => {
   res.redirect('/index.html');
 });
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`[Server] Listening on :${PORT}`);
-});
+
 app.get('/miners', async (req, res) => {
   res.json(await pm2Lib.getProcesses());
 });
 
-app.put('/miners/:filename/:action', async (req, res) => {
+app.put('/miners/:filename/:action(start|restart|stop)', async (req, res) => {
   try {
     const { filename, action } = req.params;
-    //.log('file Name '+filename +' , action '+action);
+
     switch (action) {
       case 'start':
         res.json(await pm2Lib.startProcess(filename));
         break;
       case 'restart':
+        console.log('File Name in app.ts '+filename);
         res.json(await pm2Lib.restartProcess(filename));
         break;
       case 'stop':
@@ -35,3 +36,12 @@ app.put('/miners/:filename/:action', async (req, res) => {
     res.status(500).json({ message: (error[0] || error).message });
   }
 });
+
+
+const PORT = process.env.PORT || 3000;
+
+const httpServer = app.listen(PORT, () => {
+  console.log(`[Server] Listening on :${PORT}`);
+});
+
+socketIO.init(httpServer);
