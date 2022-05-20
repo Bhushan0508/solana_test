@@ -1,11 +1,11 @@
 WINIT Test
 
-1. ts-pm2-ui folder contains the files for UI and Node server
+1. "UI" folder contains the files for UI and Node server
     a. "public" folder contains index.html and js/main.js for user interface
     b. "src" folder contains the files for node server
 
 **Installation:**
-1. Go to the root folder (ts-pm2-ui)
+1. Go to the root folder ("UI")
 2. run "yarn" to install dependencies.
 Running app
 3. run "npm start dev" to start the node server
@@ -23,7 +23,7 @@ NFT upload done using sugar app.
 Minting NFT works with sugar
 
 
-Other github.com  projects studies
+Other github.com  projects (which i think may be useful)
 1.  Staking 
    a. https://github.com/gemworks/gem-farm.git
     This project has the complete bank app/ and farm app which implements staking concepts
